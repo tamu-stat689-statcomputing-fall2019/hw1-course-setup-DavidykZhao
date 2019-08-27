@@ -6,6 +6,9 @@
 generateY <- function(X, beta, sigma, seed = 5832652){
   #[ToDo] Set seed and generate Y following linear model
   
+  set.seed(seed)
+  eps = rnorm(dim(X)[1], 0, sigma)
+  Y = X %*% beta + eps
   # Return Y
   return(Y)
 }
@@ -15,14 +18,14 @@ generateY <- function(X, beta, sigma, seed = 5832652){
 # Y -response
 calculateBeta <- function(X, Y){
   # Calculate beta_LS
-  
+  beta_LS = solve(t(X) %*% X) %*% (t(X) %*% Y)
   # Return beta
   return(beta_LS)
 }
 
 # Calculate MSE
 calculateMSE <- function(beta, beta_LS){
-  
+  MSE = sqrt(sum((beta - beta_LS) ^ 2))
   # Return MSE - error ||beta - beta_LS||_2^2
   return(MSE)
 }
